@@ -29,4 +29,10 @@ class TripsController < ApplicationController
     )
     render :show
   end
+
+  def destroy
+    @trip = Trip.find_by(id: params[:id])
+    @trip.destroy
+    render json: { message: "Trip destroyed successfully" }
+  end
 end

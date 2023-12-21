@@ -33,4 +33,11 @@ class TripsControllerTest < ActionDispatch::IntegrationTest
     data = JSON.parse(response.body)
     assert_equal "Updated Location", data["location"]
   end
+
+  test "destroy" do
+    assert_difference "Trip.count", -1 do
+      delete "/trips/#{Trip.first.id}.json"
+      assert_response 200
+    end
+  end
 end

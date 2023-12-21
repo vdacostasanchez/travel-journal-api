@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   get "/trips/:id" => "trips#show"
 
   patch "/trips/:id" => "trips#update"
+
+  delete "/trips/:id" => "trips#destroy"
 end
