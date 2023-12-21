@@ -19,4 +19,16 @@ class PlacesController < ApplicationController
     @place = Place.find_by(id: params[:id])
     render :show
   end
+
+  def update
+    @place = Place.find_by(id: params[:id])
+    @place.update(
+      trip_id: params[:trip_id] || @place.trip_id,
+      user_id: params[:user_id] || @place.user_id,
+      name: params[:name] || @place.name,
+      date: params[:date] || @place.date,
+      address: params[:address] || @place.address,
+    )
+    render :show
+  end
 end
