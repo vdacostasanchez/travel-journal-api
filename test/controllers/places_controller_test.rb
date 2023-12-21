@@ -15,4 +15,12 @@ class PlacesControllerTest < ActionDispatch::IntegrationTest
       assert_response 200
     end
   end
+
+  test "show" do
+    get "/places/#{Place.first.id}.json"
+    assert_response 200
+
+    data = JSON.parse(response.body)
+    assert_equal ["id", "user_id", "trip_id", "name", "date", "address", "created_at", "updated_at"], data.keys
+  end
 end
