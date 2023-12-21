@@ -33,4 +33,10 @@ class JournalEntriesController < ApplicationController
     )
     render :show
   end
+
+  def destroy
+    @journal_entry = JournalEntry.find_by(id: params[:id])
+    @journal_entry.destroy
+    render json: { message: "Journal Entry destroyed successfully" }
+  end
 end
