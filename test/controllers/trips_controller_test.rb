@@ -16,9 +16,18 @@ class TripsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "show" do
+    trip = Trip.first
+    get "/trips/#{trip.id}.json"
+    assert_response 200
+
+    data = JSON.parse(response.body)
+    assert_equal ["id", "user_id", "start_date", "end_date", "location", "created_at", "updated_at"], data.keys
+  end
+
   test "update" do
     trip = Trip.first
-    patch "/trips/#{trip.id}.json", params: { location: "Updated Location" }
+    patch "/trips/#{Trip.id}.json", params: { location: "Updated Location" }
     assert_response 200
 
     data = JSON.parse(response.body)
