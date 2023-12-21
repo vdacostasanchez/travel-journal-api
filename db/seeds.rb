@@ -22,3 +22,32 @@ JournalEntry.create(title: "A Day by the Shore",
                     trip_id: 1,
                     user_id: 3,
                     public: false)
+
+Place.create(
+  trip_id: 1,
+  user_id: 1,
+  name: "Sunset Viewpoint",
+  date: 20231208,
+  address: "123 Main Street, Cityville, State, Country",
+)
+Place.create(
+  trip_id: 2,
+  user_id: 2,
+  name: "Local Cafe",
+  date: 20231216,
+  address: "456 Park Avenue, Townsville, State, Country",
+)
+Place.create(
+  trip_id: 3,
+  user_id: 1,
+  name: "Mountain Lodge",
+  date: 20231124,
+  address: "789 Mountain Road, Summit City, State, Country",
+)
+Place.create(
+  trip_id: 1,
+  user_id: 3,
+  name: "Seaside Restaurant",
+  date: 20231217,
+  address: "101 Beachside Boulevard, Coastal Town, State, Country",
+)
