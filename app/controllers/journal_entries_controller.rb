@@ -20,4 +20,17 @@ class JournalEntriesController < ApplicationController
     @journal_entry = JournalEntry.find_by(id: params[:id])
     render :show
   end
+
+  def update
+    @journal_entry = JournalEntry.find_by(id: params[:id])
+    @journal_entry.update(
+      title: params[:title] || @journal_entry.title,
+      date: params[:date] || @journal_entry.date,
+      entry: params[:entry] || @journal_entry.entry,
+      trip_id: params[:trip_id] || @journal_entry.trip_id,
+      user_id: params[:user_id] || @journal_entry.user_id,
+      public: params[:public] || @journal_entry.public,
+    )
+    render :show
+  end
 end
