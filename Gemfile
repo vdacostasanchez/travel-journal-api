@@ -72,3 +72,5 @@ end
 
 # Use ActiveModel has_secure_password
 gem "bcrypt", "~> 3.1.7"
+
+gem "jwt"
