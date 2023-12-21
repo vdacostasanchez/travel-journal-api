@@ -1,0 +1,9 @@
+json.id journal_entry.id
+json.title journal_entry.title
+json.date journal_entry.date
+json.entry journal_entry.entry
+json.trip_id journal_entry.trip_id
+json.user_id journal_entry.user_id
+json.public journal_entry.public
+json.created_at journal_entry.created_at
+json.updated_at journal_entry.updated_at
