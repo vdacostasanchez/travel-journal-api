@@ -19,4 +19,7 @@ Rails.application.routes.draw do
   get "/places/:id" => "places#show"
   patch "/places/:id" => "places#update"
   delete "/places/:id" => "places#destroy"
+
+  #Users
+  post "/users" => "users#create"
 end
