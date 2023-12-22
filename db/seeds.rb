@@ -51,3 +51,22 @@ Place.create(
   date: 20231217,
   address: "101 Beachside Boulevard, Coastal Town, State, Country",
 )
+
+Image.create(
+  user_id: 1,
+  trip_id: 1,
+  date: 20231221,
+  img_url: "image.jpeg",
+)
+Image.create(
+  user_id: 2,
+  trip_id: 2,
+  date: 20231224,
+  img_url: "image.jpeg",
+)
+Image.create(
+  user_id: 1,
+  trip_id: 2,
+  date: 20230121,
+  img_url: "image.jpeg",
+)
