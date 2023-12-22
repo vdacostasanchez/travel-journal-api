@@ -23,4 +23,13 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     data = JSON.parse(response.body)
     assert_equal ["id", "user_id", "trip_id", "date", "img_url", "created_at", "updated_at"], data.keys
   end
+
+  test "update" do
+    image = Image.first
+    patch "/images/#{image.id}.json", params: { img_url: "Updated img_url" }
+    assert_response 200
+
+    data = JSON.parse(response.body)
+    assert_equal "Updated img_url", data["img_url"]
+  end
 end
