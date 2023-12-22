@@ -27,7 +27,7 @@ class TripsControllerTest < ActionDispatch::IntegrationTest
 
   test "update" do
     trip = Trip.first
-    patch "/trips/#{Trip.id}.json", params: { location: "Updated Location" }
+    patch "/trips/#{trip.id}.json", params: { location: "Updated Location" }
     assert_response 200
 
     data = JSON.parse(response.body)
