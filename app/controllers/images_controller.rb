@@ -13,4 +13,9 @@ class ImagesController < ApplicationController
     )
     render :show
   end
+
+  def show
+    @image = Image.find_by(id: params[:id])
+    render :show
+  end
 end
