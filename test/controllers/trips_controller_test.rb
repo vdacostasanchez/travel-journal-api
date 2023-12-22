@@ -1,6 +1,13 @@
 require "test_helper"
 
 class TripsControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    User.create(name: "valeria", email: "valeria@test.com", password: "password")
+    post "/sessions.json", params: { email: "valeria@test.com", password: "password" }
+    data = JSON.parse(response.body)
+    @jwt = data["jwt"]
+  end
+
   test "index" do
     get "/trips.json"
     assert_response 200
@@ -11,7 +18,14 @@ class TripsControllerTest < ActionDispatch::IntegrationTest
 
   test "create" do
     assert_difference "Trip.count", 1 do
-      post "/trips.json", params: { user_id: 1, start_date: 20000101, end_date: 20001231, location: "Test location" }
+      post "/users.json", params: { name: "test", email: "test@test.com", password: "password", password_confirmation: "password" }
+      post "/sessions.json", params: { email: "test@test.com", password: "password" }
+      data = JSON.parse(response.body)
+      jwt = data["jwt"]
+
+      post "/trips.json",
+           params: { user_id: 1, start_date: 20000101, end_date: 20001231, location: "Test location" },
+           headers: { "Authorization" => "Bearer #{jwt}" }
       assert_response 200
     end
   end
@@ -27,7 +41,9 @@ class TripsControllerTest < ActionDispatch::IntegrationTest
 
   test "update" do
     trip = Trip.first
-    patch "/trips/#{trip.id}.json", params: { location: "Updated Location" }
+    patch "/trips/#{trip.id}.json",
+          params: { location: "Updated Location" },
+          headers: { "Authorization" => "Bearer #{@jwt}" }
     assert_response 200
 
     data = JSON.parse(response.body)
@@ -36,7 +52,8 @@ class TripsControllerTest < ActionDispatch::IntegrationTest
 
   test "destroy" do
     assert_difference "Trip.count", -1 do
-      delete "/trips/#{Trip.first.id}.json"
+      delete "/trips/#{Trip.first.id}.json",
+             headers: { "Authorization" => "Bearer #{@jwt}" }
       assert_response 200
     end
   end
