@@ -12,10 +12,14 @@ class JournalEntriesController < ApplicationController
       date: params[:date],
       entry: params[:entry],
       trip_id: params[:trip_id],
-      user_id: params[:user_id],
+      user_id: current_user.id,
       public: params[:public],
     )
-    render :show
+    if @journal_entry.save
+      render :show
+    else
+      render json: { errors: @journal_entry.errors.full_messages }, status: 422
+    end
   end
 
   def show
@@ -30,10 +34,14 @@ class JournalEntriesController < ApplicationController
       date: params[:date] || @journal_entry.date,
       entry: params[:entry] || @journal_entry.entry,
       trip_id: params[:trip_id] || @journal_entry.trip_id,
-      user_id: params[:user_id] || @journal_entry.user_id,
+      user_id: current_user.id || @journal_entry.user_id,
       public: params[:public] || @journal_entry.public,
     )
-    render :show
+    if @journal_entry.save
+      render :show
+    else
+      render json: { errors: @journal_entry.errors.full_messages }, status: 422
+    end
   end
 
   def destroy

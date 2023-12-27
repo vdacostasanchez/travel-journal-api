@@ -4,14 +4,14 @@ one:
   title: MyString
   date: 2023-12-20
   entry: MyText
-  trip_id: 1
-  user_id: 1
+  trip: one
+  user: one
   public: false
 
 two:
   title: MyString
   date: 2023-12-20
   entry: MyText
-  trip_id: 1
-  user_id: 1
+  trip: one
+  user: one
   public: false

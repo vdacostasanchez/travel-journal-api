@@ -8,13 +8,17 @@ class PlacesController < ApplicationController
 
   def create
     @place = Place.create(
+      user_id: current_user.id,
       trip_id: params[:trip_id],
-      user_id: params[:user_id],
       name: params[:name],
       date: params[:date],
       address: params[:address],
     )
-    render :show
+    if @place.save
+      render :show
+    else
+      render json: { error: @place.errors.full_messages }, status: 422
+    end
   end
 
   def show
@@ -25,13 +29,17 @@ class PlacesController < ApplicationController
   def update
     @place = Place.find_by(id: params[:id])
     @place.update(
+      user_id: current_user.id || @place.user_id,
       trip_id: params[:trip_id] || @place.trip_id,
-      user_id: params[:user_id] || @place.user_id,
       name: params[:name] || @place.name,
       date: params[:date] || @place.date,
       address: params[:address] || @place.address,
     )
-    render :show
+    if @place.save
+      render :show
+    else
+      render json: { error: @place.errors.full_messages }, status: 422
+    end
   end
 
   def destroy

@@ -8,28 +8,40 @@ class TripsController < ApplicationController
 
   def create
     @trip = Trip.create(
-      user_id: params[:name],
+      user_id: current_user.id,
       start_date: params[:start_date],
       end_date: params[:end_date],
       location: params[:location],
     )
-    render :show
+    if @trip.save
+      render :show
+    else
+      render json: { errors: @trip.errors.full_messages }, status: 422
+    end
   end
 
   def show
     @trip = Trip.find_by(id: params[:id])
-    render :show
+    if @trip
+      render :show
+    else
+      render json: { errors: @trip.errors.full_messages }, status: 422
+    end
   end
 
   def update
     @trip = Trip.find_by(id: params[:id])
     @trip.update(
-      user_id: params[:user_id] || @trip.user_id,
+      user_id: current_user.id || @trip.user_id,
       start_date: params[:start_date] || @trip.start_date,
       end_date: params[:end_date] || @trip.end_date,
       location: params[:location] || @trip.location,
     )
-    render :show
+    if @trip.valid?
+      render :show
+    else
+      render json: { errors: @trip.errors.full_messages }, status: 422
+    end
   end
 
   def destroy

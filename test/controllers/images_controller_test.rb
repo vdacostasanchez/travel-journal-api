@@ -2,7 +2,7 @@ require "test_helper"
 
 class ImagesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    User.create(name: "tiger", email: "tiger@test.com", password: "password")
+    User.create(name: "tiger", email: "tiger@test.com", password: "password", password_confirmation: "password")
     post "/sessions.json", params: { email: "tiger@test.com", password: "password" }
     data = JSON.parse(response.body)
     @jwt = data["jwt"]
@@ -18,14 +18,9 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
 
   test "create" do
     assert_difference "Image.count", 1 do
-      post "/users.json", params: { name: "test", email: "test@test.com", password: "password", password_confirmation: "password" }
-      post "/sessions.json", params: { email: "test@test.com", password: "password" }
-      data = JSON.parse(response.body)
-      jwt = data["jwt"]
-
       post "/images.json",
-           params: { user_id: 1, trip_id: 1, date: 20231222, img_url: "img.jpg" },
-           headers: { "Authorization" => "Bearer #{jwt}" }
+           params: { trip_id: Trip.first.id, date: 20231222, img_url: "img.jpg" },
+           headers: { "Authorization" => "Bearer #{@jwt}" }
       assert_response 200
     end
   end

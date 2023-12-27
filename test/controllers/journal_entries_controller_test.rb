@@ -2,8 +2,8 @@ require "test_helper"
 
 class JournalEntriesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    User.create(name: "tiger", email: "tiger@test.com", password: "password")
-    post "/sessions.json", params: { email: "tiger@test.com", password: "password" }
+    User.create(name: "valeria", email: "valeria@test.com", password: "password")
+    post "/sessions.json", params: { email: "valeria@test.com", password: "password" }
     data = JSON.parse(response.body)
     @jwt = data["jwt"]
   end
@@ -18,14 +18,9 @@ class JournalEntriesControllerTest < ActionDispatch::IntegrationTest
 
   test "create" do
     assert_difference "JournalEntry.count", 1 do
-      post "/users.json", params: { name: "test", email: "test@test.com", password: "password", password_confirmation: "password" }
-      post "/sessions.json", params: { email: "test@test.com", password: "password" }
-      data = JSON.parse(response.body)
-      jwt = data["jwt"]
-
       post "/journal_entries.json",
-           params: { title: "Title", date: 20000101, entry: "This is not a really long entry", trip_id: 1, user_id: 1, public: false },
-           headers: { "Authorization" => "Bearer #{jwt}" }
+           params: { title: "Title", date: 20000101, entry: "This is not a really long entry", trip_id: Trip.first.id, public: false },
+           headers: { "Authorization" => "Bearer #{@jwt}" }
       assert_response 200
     end
   end

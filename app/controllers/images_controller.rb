@@ -8,12 +8,16 @@ class ImagesController < ApplicationController
 
   def create
     @image = Image.create(
-      user_id: params[:user_id],
+      user_id: current_user.id,
       trip_id: params[:trip_id],
       date: params[:date],
       img_url: params[:img_url],
     )
-    render :show
+    if @image.save
+      render :show
+    else
+      render json: { errors: @image.errors.full_messages }, status: 422
+    end
   end
 
   def show
@@ -24,12 +28,16 @@ class ImagesController < ApplicationController
   def update
     @image = Image.find_by(id: params[:id])
     @image.update(
-      user_id: params[:user_id] || @image.user_id,
+      user_id: current_user.id || @image.user_id,
       trip_id: params[:trip_id] || @image.trip_id,
       date: params[:date] || @image.date,
       img_url: params[:img_url] || @image.img_url,
     )
-    render :show
+    if @image.valid?
+      render :show
+    else
+      render json: { errors: @image.errors.full_messages }, status: 422
+    end
   end
 
   def destroy
