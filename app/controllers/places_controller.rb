@@ -7,13 +7,21 @@ class PlacesController < ApplicationController
   end
 
   def create
-    @place = Place.create(
+    @place = Place.new(
       user_id: current_user.id,
       trip_id: params[:trip_id],
       name: params[:name],
       date: params[:date],
       address: params[:address],
     )
+    geocoded = Geocoder.search(params[:address])
+
+    if geocoded
+      @place.latitude = geocoded.first.coordinates[0]
+      @place.longitude = geocoded.first.coordinates[1]
+    else
+      render json: { error: "Could not geocode address" }, status: 422
+    end
     if @place.save
       render :show
     else
