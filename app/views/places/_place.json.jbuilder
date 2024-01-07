@@ -1,6 +1,7 @@
 json.id place.id
 json.user_id place.user_id
 json.trip_id place.trip_id
+json.trip place.trip
 json.name place.name
 json.date place.date
 json.address place.address

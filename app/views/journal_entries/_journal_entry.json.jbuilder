@@ -3,6 +3,7 @@ json.title journal_entry.title
 json.date journal_entry.date
 json.entry journal_entry.entry
 json.trip_id journal_entry.trip_id
+json.trip journal_entry.trip
 json.user_id journal_entry.user_id
 json.public journal_entry.public
 json.created_at journal_entry.created_at
