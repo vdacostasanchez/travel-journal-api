@@ -8,6 +8,11 @@ json.places trip.places.map do |place|
   json.date place.date
   json.address place.address
 end
+json.journal_entries trip.journal_entries.map do |journal_entry|
+  json.title journal_entry.title
+  json.date journal_entry.date
+  json.entry journal_entry.entry
+end
 json.created_at trip.created_at
 json.updated_at trip.updated_at
 
